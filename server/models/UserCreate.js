@@ -19,7 +19,10 @@ const createUser=async(item)=>{
    return await newUser.save()
 }
 
+const allUser=async ()=>{
+    return await User.find({})
+}
 
 const User=mongoose.model('user',userSchema)
 
-module.exports={createUser}
+module.exports={createUser,allUser}
