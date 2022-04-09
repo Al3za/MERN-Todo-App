@@ -22,7 +22,7 @@ export default function CreateUser(){
             </form><br/>
 
             <Link to={`/${name}/${password}`} >
-                click her to create a user
+               <button>create user </button>
             </Link>
             
             {/* <form action="/sub" method="post">

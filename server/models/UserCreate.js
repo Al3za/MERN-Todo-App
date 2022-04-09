@@ -14,15 +14,17 @@ userSchema.pre(
     }
 )
 
-const createUser=async(item)=>{
-  const newUser=new User(item)
-   return await newUser.save()
+userSchema.statics.login=async function (username,password){
+const user= await this.findOne({username})
+if(user && (await bcrypt.compare(password,user.password))) {
+    return user
+}else {
+  return  null 
+}
 }
 
-const allUser=async ()=>{
-    return await User.find({})
-}
+
 
 const User=mongoose.model('user',userSchema)
 
-module.exports={createUser,allUser}
+module.exports={User}
