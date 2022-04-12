@@ -23,8 +23,16 @@ if(user && (await bcrypt.compare(password,user.password))) {
 }
 }
 
-
-
 const User=mongoose.model('user',userSchema)
 
-module.exports={User}
+const createUser= async(item)=>{
+return await User.create(item)
+}
+
+// const validation=async({item})=>{
+// const zes= item.username
+// return zes
+// }
+
+
+module.exports={createUser,User}
