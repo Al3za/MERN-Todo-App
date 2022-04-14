@@ -6,9 +6,7 @@ const JWT=require('jsonwebtoken');
 
 routers.post('/login', async (req,res)=>{
     const {username,password}=req.body;
-    console.log(username,password)
     const login= await User.login(username,password);
-    console.log(login)
     if(login){
         const Userid=login._id.toString();
         const token=JWT.sign(
@@ -16,7 +14,7 @@ routers.post('/login', async (req,res)=>{
             process.env.SECRET_KEY,
             {expiresIn:"24 h", subject:Userid},
         )
-        return token,
+        return token,        
         res.json({token}) 
     }
     else{ 
