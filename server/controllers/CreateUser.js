@@ -2,8 +2,7 @@ const express=require('express')
 const routers=express.Router()
 const {User,createUser}=require('../models/UserCreate');
 const JWT=require('jsonwebtoken');
-//const SECRET_KEY='hdvjSDJHD'
-
+  
 routers.post('/login', async (req,res)=>{
     const {username,password}=req.body;
     const login= await User.login(username,password);

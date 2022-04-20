@@ -1,10 +1,10 @@
 import { useState,useEffect } from "react";
 import {useNavigate} from "react-router-dom" 
-//import { createContext } from "react";
+import { Link } from "react-router-dom";
 
-//const context=createContext({});
 
 export default function SeeUserTodos(){
+
     const [datas,SetDatas]=useState([])
     const [ToDoId,setToDoId]=useState(null)
     const navigate=useNavigate()
@@ -18,7 +18,6 @@ export default function SeeUserTodos(){
             .then(res=>res.json())
             .then(data=>{
                 SetDatas(data)
-                //console.log(data[0]._id)
                 
             })
     }
@@ -26,26 +25,28 @@ export default function SeeUserTodos(){
 
     function HandleSubmit(){
       
-      console.log(ToDoId)
+         const DONE_TODO=`http://localhost:4000/ToDo/DoneToDoCreate/${ToDoId}`
          const DELETE_URL=`http://localhost:4000/ToDo/deleteTodo/${ToDoId}`
-         fetch(DELETE_URL)
-         //.then(navigate('/see/UserTodos'))
-    }
-
-return(  
+         fetch(DONE_TODO)
+         .then(
+             fetch(DELETE_URL)
+              )
+    }   
+  
+return(   
     
-    <>
-    <h1>Se your List</h1> 
-    {datas.map((item)=>{
-        return <p >{item.text} 
-        <form onSubmit={HandleSubmit}>
-             done <input type="checkbox" value={ToDoId} onClick={e=>setToDoId(item._id)} />
-             <input type="submit" />
-              </form> </p>
-    })}
-    </>
+    <div> 
+        <h1>Se your List</h1>
+        {datas.map((item)=>{
+            return  <p>{item.text} 
+            <form onSubmit={HandleSubmit}>
+                 done <input type="checkbox" value={ToDoId} onClick={e=>setToDoId(item._id)} />
+                 <input type="submit" />
+                  </form> 
+                  </p> 
+       })}
+        <Link to={'/SeeDoneToDos'}>look att all ur done toDo</Link>
+    </div>
 )
-
+ 
 }
-
-//export {context}
