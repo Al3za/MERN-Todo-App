@@ -7,6 +7,7 @@ export default function Login(){
     const[wrongLogin,setwrongLogin]=useState('')
     const navigate=useNavigate()
     const URL_LOGIN='http://localhost:4000/login/'
+    const clear_token=localStorage.clear('token')
 
     function handleOnSubmit(e){
         e.preventDefault()

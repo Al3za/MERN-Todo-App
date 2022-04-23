@@ -4,14 +4,14 @@ import { Link } from "react-router-dom"
 export default function SkapaToDos(){
     const[toDo,setToDo]=useState(null)
     const [LookToken,setLookToken]=useState(null)
-    const getToken=localStorage.getItem('token')
+    const Token=localStorage.getItem('token')
     
     function handleOnSubmit(e){
         e.preventDefault()
 
-        if(getToken){
+        if(Token){
 
-        const ToDo_Url=`http://localhost:4000/ToDo/TodoList/${getToken}`;
+        const ToDo_Url=`http://localhost:4000/ToDo/TodoList/${Token}`;
         const payLoad={toDo}
  
         fetch(ToDo_Url,{
@@ -40,6 +40,7 @@ export default function SkapaToDos(){
         ):(
             ""
         )}
+        <Link to={'/login'}> <button> logga ut </button> </Link>
         </> 
     )
 } 
