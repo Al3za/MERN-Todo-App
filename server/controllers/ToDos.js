@@ -3,7 +3,6 @@ const ToDoRoute=express.Router();
 const {ToDoList}=require('../models/UserToDos')
 const {DoneToDo}=require('../models/DoneToDo')
 const JWT=require('jsonwebtoken');
-const { application } = require('express');
 
 ToDoRoute.post('/TodoList/:token', async (req,res)=>{
     const params=req.params.token
@@ -16,20 +15,19 @@ ToDoRoute.post('/TodoList/:token', async (req,res)=>{
 }) 
      
 ToDoRoute.get('/SeeUserTodos/:token/:nr',async(req,res)=>{
-    const nr= Number(req.params.nr); 
+    let nr=Number(req.params.nr);
+    
      try{
     const token=req.params.token;   
     const decryptToken=JWT.verify(token,process.env.SECRET_KEY)
-    const tokenToString=decryptToken.Userid;
-    //nr ? nr : -1 
-    const seeAllUserTodo=await ToDoList.find({user:tokenToString}).sort({ createdAt: nr ? nr : -1 });
-    //const seeAllUserTodo=await ToDoList.find({createdAt:'2022-04-22T05:19:55.485+00:00'});
+    const tokenToString=decryptToken.Userid; 
+    const seeAllUserTodo=await ToDoList.find({user:tokenToString}).sort({ createdAt: nr? nr:-1 });
     res.send(seeAllUserTodo) 
      } 
-     catch(err){ 
-         console.error('error')
+     catch(err){  
+         console.error('error')  
      } 
-})         
+})           
    
 ToDoRoute.get('/DoneToDoCreate/:ToDoId',async (req,res)=>{
     const doneId=req.params.ToDoId;
@@ -44,13 +42,14 @@ ToDoRoute.get('/DoneToDoCreate/:ToDoId',async (req,res)=>{
    const deleteTodo= await ToDoList.deleteOne({_id:ToDoId})
    res.json('')
    })   
- 
+  
     ToDoRoute.get('/DoneToDo/:token/:nr',async(req,res)=>{   
      const nr= Number(req.params.nr);  
      const token=req.params.token;
+     console.log(nr)
      const verify=JWT.verify(token, process.env.SECRET_KEY)
      const user_id=verify.Userid;
-     const idData= await DoneToDo.find({ user:user_id}).sort({createdAt: nr ? nr:-1})
+     const idData= await DoneToDo.find({ user:user_id}).sort({createdAt: nr? nr : -1})
      res.json(idData)
     })   
 
@@ -79,6 +78,8 @@ ToDoRoute.get('/DoneToDoCreate/:ToDoId',async (req,res)=>{
     })    
     
     ToDoRoute.get('/testDoneToDo/:para/:token',async (req,res)=>{
+        const nr=req.params.nr
+        console.log(nr)
         const params=req.params.para;
         const token=req.params.token
         const decryptToken=JWT.verify(token,process.env.SECRET_KEY)
@@ -90,7 +91,7 @@ ToDoRoute.get('/DoneToDoCreate/:ToDoId',async (req,res)=>{
         res.json(regFind);
     })  
     
-    
+     
                        
              
 exports.ToDoRoute=ToDoRoute   

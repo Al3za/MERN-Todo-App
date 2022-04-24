@@ -1,8 +1,10 @@
-import { useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { useContext, useState } from "react"
+import { contex } from "../App"
+import { useNavigate, Link } from "react-router-dom"
+
 
 export default function Login(){
-    const[username,SetUsername]=useState(null)
+    const {username,SetUsername}=useContext(contex)
     const[password,SetPassword]=useState(null)
     const[wrongLogin,setwrongLogin]=useState('')
     const navigate=useNavigate()
@@ -48,6 +50,7 @@ export default function Login(){
             <input type="submit" />
         </form> <br/>
         <h1>{wrongLogin}</h1>
+        <Link to={'/'} > create user </Link>
         </>
     )
 }

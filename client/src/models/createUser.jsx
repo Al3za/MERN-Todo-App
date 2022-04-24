@@ -1,4 +1,5 @@
-import { useState} from 'react';
+import { useState, useContext } from 'react';
+import { contex } from '../App';
 import {Link} from 'react-router-dom'
 import { useNavigate } from 'react-router-dom';
 
@@ -6,17 +7,18 @@ export default function CreateUser(){
     const [username,setName]=useState('')
     const [password,setPassword]=useState('')
     const [wrongUser,setWrongUser]=useState('')
-   const navigate=useNavigate()
+    const navigate=useNavigate()
+    const clear_token=localStorage.clear('token')
 
-    const URL='http://localhost:4000/createUser'
-
+    const URL=`http://localhost:4000/createUser`
     function HandleOnsubmit(e){
+    
       e.preventDefault()
         const PayLoad={
             username,
             password
         };
-        console.log(username,password)
+        
         fetch(URL,{ 
             method:"POST",
             headers:{"Content-Type":"application/json"},
@@ -36,8 +38,6 @@ export default function CreateUser(){
  
     return(
         <div>
-            {username}<br/>
-            {password}
             <h1>create user</h1>
  
             <form onSubmit={HandleOnsubmit} >
@@ -51,7 +51,7 @@ export default function CreateUser(){
 
                   <input type='submit'/>
             </form><br/>
-
+ 
             <h2>{wrongUser}</h2>
 
             <Link to={'/login'}> <button> go to login </button> </Link>

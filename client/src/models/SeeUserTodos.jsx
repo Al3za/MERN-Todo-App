@@ -5,29 +5,29 @@ import { Link } from "react-router-dom";
 
 
 export default function SeeUserTodos(){
+    
     const {setRegData}=useContext(contex)
-
     const [datas,SetDatas]=useState([])
     const [ToDoId,setToDoId]=useState(null)
     const [searchText,setsearchText]=useState(null)
-    const [test,setTest]=useState(null)
+    const [Nr,setNr]=useState(null)
 
     const navigate=useNavigate()
     const token=localStorage.getItem('token');
-
+    
+    
     useEffect(()=>{
-        if(token){
         
-            const SEE_ALL_USER_BLOGS=`http://localhost:4000/ToDo/SeeUserTodos/${token}/${test}`;
+        if(token){
+            const SEE_ALL_USER_ToDoS=`http://localhost:4000/ToDo/SeeUserTodos/${token}/nr`;
 
-            fetch(SEE_ALL_USER_BLOGS) 
+            fetch(SEE_ALL_USER_ToDoS) 
             .then(res=>res.json())
-            .then(data=>{
+            .then(data=>
                 SetDatas(data)
-                
+            ) 
+        }
             },[])
-    } 
-    }) 
  
     function HandleSubmit(){
       
@@ -39,16 +39,26 @@ export default function SeeUserTodos(){
               )
     }   
 
-    function HandleClick(){
+    function HandleSearchText(){
     
        const testRegEx=`http://localhost:4000/ToDo/test/${searchText}/${token}`
        fetch(testRegEx)
        .then(res=>res.json())
        .then(data=>setRegData(data))
        .then(navigate('/seeRegExData'))
-
     }
-  
+
+    function HandleSort(){
+     const SEE_ALL_USER_ToDoS=`http://localhost:4000/ToDo/SeeUserTodos/${token}/${Nr}`;
+     fetch(SEE_ALL_USER_ToDoS)
+    .then(res=>res.json())
+    .then(data=>
+    SetDatas(data)
+    )  
+      
+      }   
+
+      if(token){
 return(   
     
     <div> 
@@ -59,14 +69,20 @@ return(
                  done <input type="checkbox" value={ToDoId} onClick={e=>setToDoId(item._id)} />
                  <input type="submit" />
                   </form> 
-                  </p> 
+                  </p>  
        })}
-       search todoList <input type="text" onChange={(e=>setsearchText(e.target.value))} /><br/><br/>
-       sortering <input type="text" onChange={(e=>setTest(e.target.value))} /><br/><br/> {test}
-       <button onClick={HandleClick}> search Text </button>
+       search todoList <input type="text" onChange={(e=>setsearchText(e.target.value))}/> <button onClick={HandleSearchText}> search Text </button> <br/><br/>
+       sortering <input type="text" onChange={(e=>setNr(e.target.value))} />  <button onClick={HandleSort}> sort text </button> <br/> 
        <br/>
-        <Link to={'/SeeDoneToDos'}>look att all ur done toDo</Link>
+        <Link to={'/SeeDoneToDos'}>look att all ur done toDo</Link><br/><br/>
+        <Link to={'/login'}> <button> logga ut </button> </Link><br/><br/>
+        <Link to={'/SkapaToDos'}>write toDo</Link>
     </div>
 )
- 
+    }else {
+        return <>
+         <h1> logga in för att kunna skriva todo List</h1> 
+         <Link to={'/login'}> <button> logga ut </button> </Link>
+        </>
+     }
 }

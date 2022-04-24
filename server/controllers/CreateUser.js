@@ -6,6 +6,7 @@ const JWT=require('jsonwebtoken');
 routers.post('/login', async (req,res)=>{
     const {username,password}=req.body;
     const login= await User.login(username,password);
+
     if(login){
         const Userid=login._id.toString();
         const token=JWT.sign(
@@ -23,7 +24,6 @@ routers.post('/login', async (req,res)=>{
 
 routers.post('/createUser',async(req,res)=>{
     const {username,password}=req.body;
-    //console.log(username,password)
     try{
     const create= await createUser({username,password})
     res.json('done')

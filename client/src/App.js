@@ -9,13 +9,15 @@ import SeeRegExData from './models/SeeRegExData';
 import SeeDoneToDoRegExData from './models/SeeDoneToDoRegExData';
 
 const contex=createContext({})
-
+ 
 function App() {   
   const [regData,setRegData]=useState([])
   const [doneRegData,setDoneRegData]=useState([])
+  const [username,SetUsername]=useState('')
+
   return ( 
     <> 
-      <contex.Provider value={{regData,setRegData,doneRegData,setDoneRegData}} >
+      <contex.Provider value={{regData,setRegData,doneRegData,setDoneRegData,username,SetUsername}} >
       <Routes> 
       <Route path='/' element={< CreateUser />} />
       <Route path='/login' element={< Login /> } />

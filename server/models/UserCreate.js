@@ -29,10 +29,5 @@ const createUser= async(item)=>{
 return await User.create(item)
 }
 
-// const validation=async({item})=>{
-// const zes= item.username
-// return zes
-// }
-
 
 module.exports={createUser,User}
