@@ -20,10 +20,11 @@ routers.post('/login', async (req,res)=>{
     else{ 
         res.json('wrong login, try again')
     }
-}) 
+})  
 
 routers.post('/createUser',async(req,res)=>{
-    const {username,password}=req.body;
+    const { username, password } = req.body;
+    
     try{
     const create= await createUser({username,password})
     res.json('done')

@@ -1,5 +1,4 @@
-import { useState, useContext } from 'react';
-import { contex } from '../App';
+import { useState} from 'react';
 import {Link} from 'react-router-dom'
 import { useNavigate } from 'react-router-dom';
 
